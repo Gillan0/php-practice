@@ -192,6 +192,14 @@ class CitationDatabase {
             return false;
         }
 
+        if (strlen($login) > 20 || strlen($text) > 500) { 
+            return false;
+        }
+
+        if (!($author->isValidAuthor())) {
+            return false;
+        }
+
         $d = DateTime::createFromFormat('Y-m-d', $date); 
         $isValidDate = $d && $d->format('Y-m-d') == $date && $date <= Date("Y-m-d"); 
 

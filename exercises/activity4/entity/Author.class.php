@@ -34,9 +34,9 @@ class Author  {
                          string $name,
                          string $date) {
         
-        $this->surname = $surname;
-        $this->name = $name;
-        $this->date = $date;
+        $this->surname = trim($surname);
+        $this->name = trim($name);
+        $this->date = trim($date);
     }
 
     public function setId(string $id) {
@@ -91,7 +91,20 @@ class Author  {
                trim($this->name) == trim($author->name) &&
                trim($this->date) == trim($author->date);
     }
-    
+
+    public function isValidAuthor() {
+        if (empty($this->surname) || empty($this->name) || empty($this->date)) {
+            return false;
+        }
+        
+        if (strlen($this->surname) > 100 || strlen($this->name) > 100) { 
+            return false;
+        }
+        
+        $d = DateTime::createFromFormat('Y-m-d', $this->date); 
+        $isValidDate = $d && $d->format('Y-m-d') == $this->date && $this->date <= Date("Y-m-d"); 
+        return $isValidDate;
+    }
 
 }
 
